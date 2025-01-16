@@ -3,7 +3,7 @@
   <a href="https://pub.dev/packages/tarsier_local_storage">
     <img height="260" src="https://raw.githubusercontent.com/marianz-bonfire/tarsier_local_storage/master/assets/logo.png">
   </a>
-  <h1 align="center">Pubspec Checker</h1>
+  <h1 align="center">Tarsier Local Storage</h1>
 </p>
 
 <p align="center">
