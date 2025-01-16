@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:tarsier_local_storage/src/base_table.dart';
 
@@ -83,9 +82,6 @@ class TarsierLocalStorage {
           onCreate: (db, version) => _onCreate(db, version, tables),
         ),
       );
-      if (desktopDatabase == null) {
-        throw Exception('Failed to initialize database!');
-      }
       return desktopDatabase;
     } else if (Platform.isAndroid || Platform.isIOS) {
       final mobileDatabase = await openDatabase(
@@ -93,9 +89,6 @@ class TarsierLocalStorage {
         version: 1,
         onCreate: (db, version) => _onCreate(db, version, tables),
       );
-      if (mobileDatabase == null) {
-        throw Exception('Failed to initialize database!');
-      }
       return mobileDatabase;
     }
 

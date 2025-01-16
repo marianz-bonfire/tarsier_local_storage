@@ -1,3 +1,10 @@
+## 1.0.1
+
++ Added flutter example
++ Added example screenshots
+* Added more information int the README file
+* Fixed some issue on reported warning
+
 ## 1.0.0
 
 - Support for SQLite database initialization and management.

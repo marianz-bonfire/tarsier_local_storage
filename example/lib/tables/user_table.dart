@@ -1,6 +1,5 @@
 import 'package:tarsier_local_storage/tarsier_local_storage.dart';
-
-import '../models/user_model.dart';
+import 'package:tarsier_local_storage_example/models/user_model.dart';
 
 class UserTable extends BaseTable<User> {
   UserTable()

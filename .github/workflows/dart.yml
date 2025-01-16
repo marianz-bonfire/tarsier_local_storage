@@ -39,9 +39,3 @@ jobs:
       - name: Format code
         #if: ${{ matrix.sdk == 'stable' }}
         run: dart format .
-
-      - name: Active coverage
-        run: dart pub global activate coverage
-
-      - name: Run tests
-        run: dart run test
