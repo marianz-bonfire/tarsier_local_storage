@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:tarsier_local_storage/tarsier_local_storage.dart';
 

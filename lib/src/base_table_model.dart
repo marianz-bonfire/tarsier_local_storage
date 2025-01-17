@@ -34,6 +34,7 @@
 ///   };
 /// }
 /// ```
+library;
 
 abstract class BaseTableModel {
   /// Converts the model to a map of key-value pairs.
