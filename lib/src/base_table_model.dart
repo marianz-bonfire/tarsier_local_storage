@@ -1,41 +1,28 @@
-/// An abstract base class for table models used in database operations.
+/// Abstract class representing the base model for database tables.
 ///
-/// This class defines the structure and behavior of database models
-/// that can be dynamically converted to and from maps for database storage
-/// and retrieval.
+/// This class provides a contract for converting models to a key-value map
+/// and accessing properties dynamically. It is intended to be extended
+/// by concrete implementations that define specific models.
 ///
-/// Example:
+/// ## Usage
 /// ```dart
 /// class User extends BaseTableModel {
 ///   final int id;
-///   final String name;
-///   final DateTime createdAt;
+///   final String username;
+///   final String password;
 ///
-///   User({required this.id, required this.name, required this.createdAt});
+///   User({required this.id, required this.username, required this.password});
 ///
-///   factory User.fromMap(Map<String, dynamic> map) {
-///     return User(
-///       id: map['id'] as int?,
-///       name: map['name'] as String,
-///       createdAt: DateTime.parse(map['created_at'] as String),
-///     );
-///   }
 ///   @override
 ///   Map<String, dynamic> toMap() {
-///     return {'id': id, 'name': name, 'created_at': createdAt.toIso8601String(),};
+///     return {
+///       'id': id,
+///       'username': username,
+///       'password': password,
+///     };
 ///   }
-///
-///   static const String tableName = 'users';
-///
-///   static Map<String, String> get schema => {
-///     'id': 'INTEGER PRIMARY KEY',
-///     'name': 'TEXT',
-///     'created_at': 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP',
-///   };
 /// }
 /// ```
-library;
-
 abstract class BaseTableModel {
   /// Converts the model to a map of key-value pairs.
   ///

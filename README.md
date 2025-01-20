@@ -32,19 +32,19 @@
 
 A simple and flexible library for managing SQLite databases in Dart and Flutter applications. It simplifies database operations with reusable abstractions for tables and models, making it easy to build scalable and maintainable applications.
 
-## Features
+## ✨ Features
 
 - **Easy Database Management**: Initialize and manage SQLite databases effortlessly.
 - **Dynamic Tables**: Define table schemas dynamically with support for CRUD operations.
 - **Model Mapping**: Seamlessly map database rows to model objects.
 - **Cross-Platform**: Supports Android, iOS, Windows, Linux, and more.
 
-## Getting Started
+## 🚀 Getting Started
 
 Add the package to your `pubspec.yaml`:
 ```yaml
 dependencies:
-  tarsier_local_storage: ^1.0.2
+  tarsier_local_storage: ^1.0.3
 ```
 Run the following command:
 ```bash
@@ -52,7 +52,7 @@ flutter pub get
 ```
 
 
-## Usage
+## 📒 Usage
 - ### Define a Model
 Create a class that extends `BaseTableModel` to represent a database entity:
 ```dart

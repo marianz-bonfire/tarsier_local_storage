@@ -1,8 +1,14 @@
 import 'dart:io';
 import 'dart:async';
 
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqlite_api.dart' as sql;
 import 'package:tarsier_local_storage/src/base_table.dart';
+import 'package:tarsier_local_storage/src/database/database_desktop.dart';
+import 'package:tarsier_local_storage/src/database/database_mobile.dart';
+import 'package:tarsier_local_storage/src/database/database_web.dart';
+import 'package:tarsier_local_storage/src/platforms/platform_checker.dart';
+
+//import 'database/database.dart';
 
 /// A local storage manager class for handling database operations.
 ///
@@ -11,14 +17,14 @@ import 'package:tarsier_local_storage/src/base_table.dart';
 /// based on the provided list of [BaseTable] objects.
 class TarsierLocalStorage {
   /// The singleton database instance.
-  static Database? _database;
+  static sql.Database? _database;
 
   /// Returns the initialized database instance.
   ///
   /// If the database is not already initialized, it will be created
   /// using the default file name `'data.db'` and no predefined tables.
-  Future<Database> get database async {
-    return await init('data.db', []);
+  Future<sql.Database> get database async {
+    return await init('data.db');
   }
 
   /// Initializes the database.
@@ -30,7 +36,8 @@ class TarsierLocalStorage {
   /// - [tables]: A list of tables to initialize in the database.
   ///
   /// Returns the initialized [Database] instance.
-  Future<Database> init(String databaseFile, List<BaseTable>? tables) async {
+  Future<sql.Database> init(String databaseFile,
+      [List<BaseTable> tables = const []]) async {
     if (_database != null) {
       return _database!;
     }
@@ -49,67 +56,37 @@ class TarsierLocalStorage {
   /// - [tables]: A list of tables to initialize in the database.
   ///
   /// Returns the [Database] instance.
-  Future<Database> open(String databaseFile, List<BaseTable>? tables) async {
+  Future<sql.Database> open(String databaseFile, List<BaseTable> tables,
+      {delete = false}) async {
     var storageFile = File(databaseFile);
 
-    // Create the database file if it doesn't exist
-    if (!await storageFile.exists()) {
-      try {
-        await storageFile.create(recursive: true);
-      } catch (e) {
-        throw Exception('Error creating database file: $e');
-      }
-    }
-
-    // Verify that the database file exists and is accessible
-    if (!await storageFile.exists()) {
-      throw Exception('Database file not found');
-    }
-
     try {
+      // Delete the existing database file if requested
+      if (delete && await storageFile.exists()) {
+        await storageFile.delete(recursive: true);
+      }
+
+      // Ensure the database file exists, create it if necessary
+      if (!await storageFile.exists()) {
+        await storageFile.create(recursive: true);
+      }
+
+      // Validate that the database file is accessible
       await storageFile.readAsBytes();
     } catch (e) {
-      throw Exception('Database file is not readable: $e');
+      throw Exception('Error with the database file: $e');
     }
 
-    // Platform-specific database initialization
-    if (Platform.isWindows || Platform.isLinux) {
-      sqfliteFfiInit();
-      databaseFactory = databaseFactoryFfi;
-      final desktopDatabase = await databaseFactory.openDatabase(
-        databaseFile,
-        options: OpenDatabaseOptions(
-          version: 1,
-          onCreate: (db, version) => _onCreate(db, version, tables),
-        ),
-      );
-      return desktopDatabase;
-    } else if (Platform.isAndroid || Platform.isIOS) {
-      final mobileDatabase = await openDatabase(
-        databaseFile,
-        version: 1,
-        onCreate: (db, version) => _onCreate(db, version, tables),
-      );
-      return mobileDatabase;
+    if (isWeb) {
+      return await DatabaseWeb.initDatabase(databaseFile, tables);
+    } else if (isMobile) {
+      return await DatabaseMobile.initDatabase(databaseFile, tables);
+    } else if (isDesktop) {
+      return await DatabaseDesktop.initDatabase(databaseFile, tables);
+    } else {
+      throw UnsupportedError('Unsupported platform');
     }
 
-    throw Exception("Unsupported platform");
-  }
-
-  /// Handles the creation of database tables.
-  ///
-  /// This method is invoked during database initialization. It iterates
-  /// over the provided list of tables and invokes their `createTable` method.
-  ///
-  /// - [db]: The [Database] instance.
-  /// - [version]: The version number of the database.
-  /// - [tables]: A list of tables to initialize in the database.
-  Future<void> _onCreate(
-      Database db, int version, List<BaseTable>? tables) async {
-    if (tables != null && tables.isNotEmpty) {
-      for (var table in tables) {
-        await table.createTable(db);
-      }
-    }
+    //return await DatabaseManager().initDatabase(databaseFile, tables);
   }
 }

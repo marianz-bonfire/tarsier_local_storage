@@ -1,3 +1,10 @@
+## 1.0.3
+
++ Added `web` support
++ Required sdk `'3.2.1'` or higher
+* Upgraded some dependencies and dev dependencies
+* Modified `flutter_example`
+
 ## 1.0.2
 
 + Added topics

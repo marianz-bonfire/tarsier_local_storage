@@ -1,11 +1,12 @@
 name: tarsier_local_storage
 description: A simple and flexible library for managing SQLite databases in Dart and Flutter applications.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/marianz-bonfire/tarsier_local_storage
 repository: https://github.com/marianz-bonfire/tarsier_local_storage
 issue_tracker: https://github.com/marianz-bonfire/tarsier_local_storage/issues
 
 topics:
+  - tarsier
   - storage
   - sqlite
   - local
@@ -16,20 +17,20 @@ platforms:
   ios:
   windows:
   linux:
+  web:
 
 environment:
-  sdk: '^3.0.0'
+  sdk: ^3.2.1
 
-# dependencies:
-#   path: ^1.8.0
-
-dev_dependencies:
-  lints: ^3.0.0
-  test: ^1.25.2
-
+# Add regular dependencies here.
 dependencies:
   sqflite: ^2.3.2
-  sqflite_common_ffi: ^2.3.0+4
+  sqflite_common_ffi: ^2.3.2+1
+  sqflite_common_ffi_web: ^0.4.2+3
+
+dev_dependencies:
+  lints: ^2.1.0
+  test: ^1.24.0
 
 screenshots:
   - description: The package logo.

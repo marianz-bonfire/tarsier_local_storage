@@ -23,7 +23,7 @@ jobs:
     
     strategy:
       matrix:
-        sdk: [ beta, stable, 2.18.6 ]
+        sdk: [ beta, stable, 3.2.1 ]
 
     steps:
       - uses: actions/checkout@v4
