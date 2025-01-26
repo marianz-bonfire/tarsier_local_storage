@@ -7,9 +7,9 @@ class AddEditNotePage extends StatefulWidget {
   final Note? note;
 
   const AddEditNotePage({
-    Key? key,
+    super.key,
     this.note,
-  }) : super(key: key);
+  });
 
   @override
   State<AddEditNotePage> createState() => _AddEditNotePageState();

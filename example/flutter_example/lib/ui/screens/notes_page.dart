@@ -14,7 +14,7 @@ class NotesPage extends StatefulWidget {
 }
 
 class _NotesPageState extends State<NotesPage> {
-  late List<Note> notes;
+  late List<Note> notes = [];
   bool isLoading = false;
 
   @override
@@ -48,7 +48,7 @@ class _NotesPageState extends State<NotesPage> {
         ),
         body: Center(
           child: isLoading
-              ? const CircularProgressIndicator()
+              ? const Center(child: CircularProgressIndicator())
               : notes.isEmpty
                   ? const Text(
                       'No Notes',

@@ -11,7 +11,7 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  late List<Category> _categories;
+  List<Category>? _categories = [];
   bool isLoading = false;
 
   @override
@@ -40,39 +40,42 @@ class _CategoryPageState extends State<CategoryPage> {
       appBar: AppBar(
         title: const Text('Category List'),
       ),
-      body: ListView.builder(
-        itemCount: _categories.length,
-        itemBuilder: (context, index) {
-          final category = _categories[index];
-          return ListTile(
-            title: Text(category.name),
-            subtitle: Text(
-                '${category.description} - ${category.isActive == 1 ? "Active" : "Inactive"}'),
-            trailing: IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddEditCategoryPage(
-                      category: category,
-                      onSave: (updatedCategory) async {
-                        await CategoryTable().update(category.id!, {
-                          CategoryFields.name: updatedCategory.name,
-                          CategoryFields.description:
-                              updatedCategory.description,
-                          CategoryFields.isActive: updatedCategory.isActive
-                        });
-                        refreshCategories();
-                      },
-                    ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: _categories!.length,
+              itemBuilder: (context, index) {
+                final category = _categories![index];
+                return ListTile(
+                  title: Text(category.name),
+                  subtitle: Text(
+                      '${category.description} - ${category.isActive == 1 ? "Active" : "Inactive"}'),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddEditCategoryPage(
+                            category: category,
+                            onSave: (updatedCategory) async {
+                              await CategoryTable().update(category.id!, {
+                                CategoryFields.name: updatedCategory.name,
+                                CategoryFields.description:
+                                    updatedCategory.description,
+                                CategoryFields.isActive:
+                                    updatedCategory.isActive
+                              });
+                              refreshCategories();
+                            },
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
             ),
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
