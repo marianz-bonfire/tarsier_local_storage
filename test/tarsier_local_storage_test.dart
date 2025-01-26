@@ -1,11 +1,10 @@
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:tarsier_local_storage/tarsier_local_storage.dart';
 
 void main() {
-  group('A group of tests', () {
-    setUp(() async {});
-
-    test('First Test', () {
-      expect(true, isTrue);
-    });
+  test('Checking storage connection', () async {
+    final storage = TarsierLocalStorage();
+    expect((await storage.database).isOpen, true);
   });
 }

@@ -44,7 +44,7 @@ A simple and flexible library for managing SQLite databases in Dart and Flutter 
 Add the package to your `pubspec.yaml`:
 ```yaml
 dependencies:
-  tarsier_local_storage: ^1.0.3
+  tarsier_local_storage: ^1.0.4
 ```
 Run the following command:
 ```bash

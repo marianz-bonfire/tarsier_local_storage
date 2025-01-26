@@ -11,7 +11,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  late List<Product> _products;
+  late List<Product> _products = [];
   bool isLoading = false;
 
   @override
@@ -41,7 +41,7 @@ class _ProductPageState extends State<ProductPage> {
         title: const Text('Product List'),
       ),
       body: isLoading
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: _products.length,
               itemBuilder: (context, index) {

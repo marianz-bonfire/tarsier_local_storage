@@ -11,7 +11,7 @@ class UsersPage extends StatefulWidget {
 }
 
 class _UsersPageState extends State<UsersPage> {
-  late List<User> _users;
+  late List<User> _users = [];
   bool isLoading = false;
 
   @override
@@ -41,7 +41,7 @@ class _UsersPageState extends State<UsersPage> {
         title: const Text('User List'),
       ),
       body: isLoading
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: _users.length,
               itemBuilder: (context, index) {

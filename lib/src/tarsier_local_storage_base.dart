@@ -58,23 +58,25 @@ class TarsierLocalStorage {
   /// Returns the [Database] instance.
   Future<sql.Database> open(String databaseFile, List<BaseTable> tables,
       {delete = false}) async {
-    var storageFile = File(databaseFile);
+    if (!isWeb) {
+      var storageFile = File(databaseFile);
 
-    try {
-      // Delete the existing database file if requested
-      if (delete && await storageFile.exists()) {
-        await storageFile.delete(recursive: true);
+      try {
+        // Delete the existing database file if requested
+        if (delete && await storageFile.exists()) {
+          await storageFile.delete(recursive: true);
+        }
+
+        // Ensure the database file exists, create it if necessary
+        if (!await storageFile.exists()) {
+          await storageFile.create(recursive: true);
+        }
+
+        // Validate that the database file is accessible
+        await storageFile.readAsBytes();
+      } catch (e) {
+        throw Exception('Error with the database file: $e');
       }
-
-      // Ensure the database file exists, create it if necessary
-      if (!await storageFile.exists()) {
-        await storageFile.create(recursive: true);
-      }
-
-      // Validate that the database file is accessible
-      await storageFile.readAsBytes();
-    } catch (e) {
-      throw Exception('Error with the database file: $e');
     }
 
     if (isWeb) {

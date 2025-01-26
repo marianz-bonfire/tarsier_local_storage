@@ -6,9 +6,9 @@ class NoteDetailPage extends StatefulWidget {
   final int noteId;
 
   const NoteDetailPage({
-    Key? key,
+    super.key,
     required this.noteId,
-  }) : super(key: key);
+  });
 
   @override
   State<NoteDetailPage> createState() => _NoteDetailPageState();

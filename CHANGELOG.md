@@ -1,3 +1,10 @@
+## 1.0.4
+
+* Reconstructed pubspec file
++ Added `web` necessary files for sample
+* Upgraded some dependencies and dev dependencies
+* Refactored some codes`
+
 ## 1.0.3
 
 + Added `web` support

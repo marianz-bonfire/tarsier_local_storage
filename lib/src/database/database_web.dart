@@ -1,5 +1,7 @@
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart'
+    show SqfliteFfiWebOptions, createDatabaseFactoryFfiWeb;
+
 import 'package:tarsier_local_storage/src/base_table.dart';
 
 class DatabaseWeb {
@@ -9,15 +11,22 @@ class DatabaseWeb {
   }
 }
 
+const indexedDbName = 'sqflite_databases';
+
 /// Handles database initialization for desktop platforms.
 class DatabaseManager {
   /// Opens or creates the database for desktop platforms.
   Future<Database> initDatabase(
       String databaseFile, List<BaseTable> tables) async {
     // Initialize FFI (required for web platforms).
-    databaseFactory = databaseFactoryFfiWeb;
+    //databaseFactory = databaseFactoryFfiWeb;
 
-    return await databaseFactory.openDatabase(
+    var factory = createDatabaseFactoryFfiWeb(
+        options: SqfliteFfiWebOptions(
+      indexedDbName: indexedDbName,
+    ));
+
+    return await factory.openDatabase(
       databaseFile,
       options: OpenDatabaseOptions(
         version: 1,
