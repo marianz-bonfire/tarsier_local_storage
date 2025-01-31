@@ -139,6 +139,71 @@ void main() async {
 }
 ```
 
+- ### Backup and Restore Functionality
+
+This package provides a simple and efficient way to backup and restore an SQLite database in a Flutter application. It supports saving backups in a custom file format and optionally compressing them into .zip archives for storage efficiency.
+
+  - ✅ Backup SQLite database to a specified directory
+  - ✅ Restore database from a backup file (supports .zip and uncompressed files)
+  - ✅ Supports progress tracking with callback functions
+  - ✅ Efficient file handling with proper error management
+  - ✅ Uses archive package for ZIP compression
+
+1️⃣ Backup the Database
+```dart
+await storage.backup(
+  backupDirectory: '/storage/emulated/0/backup',
+  archive: true, // Set to false if you don't want ZIP compression
+  extension: '.bk', // Custom file extension
+  onStatusChanged: (status) => print('Backup Status: $status'),
+);
+```
+
+2️⃣ Restore the Database
+
+```dart
+await storage.restore(
+  backupPath: '/storage/emulated/0/backup/data.dbbk.zip',
+  onStatusChanged: (status) => print('Restore Status: $status'),
+);
+```
+
+3️⃣ Enum Status Callbacks
+
+The backup and restore methods provide status updates via callbacks:
+
+🔹 BackupStatus Enum
+
+  - `creatingBackupDirectory` → Creating backup directory
+  - `writingBackupFile` → Copying database file
+  - `creatingArchive` → Compressing to ZIP (if enabled)
+  - `completed` → Backup completed successfully
+  - `failed` → Backup failed
+
+🔹 RestoreStatus Enum
+
+  - `readingBackupFile` → Reading backup file
+  - `decodingArchive` → Extracting ZIP contents (if applicable)
+  - `restoringDatabase` → Copying file to database location
+  - `completed` → Restore completed successfully
+  - `failed` → Restore failed
+
+4️⃣ Error Handling
+
+If the database file is missing or a backup file is corrupted, an exception will be thrown:
+```dart
+try {
+  await storage.backup(backupDirectory: '/backup');
+} catch (e) {
+  print('Backup failed: $e');
+}
+```
+
+📝 Notes
+
+  - Ensure your app has **read/write** storage permissions if saving to external directories.
+  - If using **ZIP** compression, the `.zip` file will replace the uncompressed backup.
+
 ## 📸 Example Screenshots
 
 |       Home Screen         |          Notes Screen           |   Users Screen         |   Products  Screen         |   Categories Screen         |

@@ -11,7 +11,7 @@ class DatabaseWeb {
   }
 }
 
-const indexedDbName = 'sqflite_databases';
+const indexedDbName = 'tarsier_local_storage';
 
 /// Handles database initialization for desktop platforms.
 class DatabaseManager {

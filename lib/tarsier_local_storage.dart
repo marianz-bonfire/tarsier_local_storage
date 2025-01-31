@@ -66,3 +66,5 @@ library tarsier_local_storage;
 export 'src/tarsier_local_storage_base.dart';
 export 'src/base_table.dart';
 export 'src/base_table_model.dart';
+export 'src/enums/backup_restore_status.dart';
+export 'src/logger/logger.dart';
