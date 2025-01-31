@@ -147,10 +147,8 @@ class TarsierLocalStorage {
             p.basename(backupFile.path), backupBytes.length, backupBytes));
 
         final zipData = ZipEncoder().encode(archive);
-        if (zipData != null) {
-          await zipFile.writeAsBytes(zipData);
-          await backupFile.delete(); // Remove the uncompressed backup
-        }
+        await zipFile.writeAsBytes(zipData);
+        await backupFile.delete(); // Remove the uncompressed backup
       }
 
       // Notify completion

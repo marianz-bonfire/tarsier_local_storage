@@ -13,7 +13,7 @@ Future<void> main() async {
   const backupFolder = 'backup';
   final databaseBackupFile = join(backupFolder, databaseBackup);
   await storage.init(databaseFile, [UserTable()]);
-  print(storage.databaseFile!.path);
+
   test('Initializing database', () async {
     expect(storage.databaseFile, isNull);
 

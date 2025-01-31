@@ -38,13 +38,14 @@ A simple and flexible library for managing SQLite databases in Dart and Flutter 
 - **Dynamic Tables**: Define table schemas dynamically with support for CRUD operations.
 - **Model Mapping**: Seamlessly map database rows to model objects.
 - **Cross-Platform**: Supports Android, iOS, Windows, Linux, and more.
+- **Backup & Restore**: provides a simple and efficient way to backup and restore database.
 
 ## 🚀 Getting Started
 
 Add the package to your `pubspec.yaml`:
 ```yaml
 dependencies:
-  tarsier_local_storage: ^1.0.4
+  tarsier_local_storage: ^1.0.5
 ```
 Run the following command:
 ```bash
