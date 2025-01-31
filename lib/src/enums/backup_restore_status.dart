@@ -1,16 +1,17 @@
+/// Enum representing different statuses during a backup process.
 enum BackupStatus {
-  initializing,
   creatingBackupDirectory,
-  creatingArchive,
   writingBackupFile,
+  creatingArchive,
   completed,
-  failed,
+  failed
 }
 
+/// Enum representing different statuses during a restore process.
 enum RestoreStatus {
-  initializing,
   readingBackupFile,
   decodingArchive,
+  restoringDatabase,
   completed,
-  failed,
+  failed
 }

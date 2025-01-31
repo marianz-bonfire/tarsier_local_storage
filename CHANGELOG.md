@@ -1,3 +1,12 @@
+## 1.0.5
+
+* Finalized backup and restore operations
++ Added and tested a fully functional web sample
++ Added splash and image for web sample
++ Changed index DB name for web platform
++ Added logger class on the package that handles logging
+* Modified README file to include enhancement
+
 ## 1.0.4
 
 * Reconstructed pubspec file

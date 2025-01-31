@@ -1,29 +1,62 @@
+import 'package:path/path.dart';
 import 'package:tarsier_local_storage/tarsier_local_storage.dart';
 
 void main() async {
-  await TarsierLocalStorage().init('app.db', [
+  // Initialize local storage
+  var storage = TarsierLocalStorage();
+  await storage.init('sample.db', [
     UserTable(), // Table class extended by BaseTable
   ]);
 
   final userTable = UserTable();
 
-  // Add a new user
-  await userTable.createObject(User(
-      id: 1,
-      name: 'John Doe',
-      email: 'john@gmail.com',
-      createdAt: DateTime.now()));
-  // Or using Map on creating new user
-  await userTable.create({
-    'id': 1,
-    'name': 'John Doe',
-    'email': 'john@gmail.com',
-  });
-
-  // Retrieve all users
-  final users = await userTable.all();
+  // Fetching table before backup
+  var users = await userTable.all();
   for (var user in users) {
-    print(user.name);
+    print('${user.toMap()}');
+  }
+
+  // Backup database
+  var backupDirectory = 'backup';
+  await storage.backup(
+    backupDirectory: backupDirectory,
+    archive: true,
+    onStatusChanged: (status) {
+      print(status.name);
+    },
+  );
+
+  // Adding (5) users
+  for (int i = users.length + 1; i < 5; i++) {
+    await userTable.createObject(
+      User(
+        id: i,
+        name: 'Name $i',
+        email: 'name$i@gmail.com',
+        createdAt: DateTime.now(),
+      ),
+    );
+  }
+
+  // Fetching table after adding
+  users = await userTable.all();
+  for (var user in users) {
+    print('${user.toMap()}');
+  }
+
+  // Restoring backup
+  var backupFile = join(backupDirectory, 'sample.bk.zip');
+  await storage.restore(
+    backupPath: backupFile,
+    onStatusChanged: (status) {
+      print(status.name);
+    },
+  );
+
+  // Fetching table users after restoring
+  users = await userTable.all();
+  for (var user in users) {
+    print('${user.toMap()}');
   }
 }
 
