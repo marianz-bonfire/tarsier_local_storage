@@ -61,7 +61,7 @@
 /// }
 /// ```
 
-library tarsier_local_storage;
+library;
 
 export 'src/tarsier_local_storage_base.dart';
 export 'src/base_table.dart';

@@ -101,7 +101,7 @@ abstract class BaseTable<T extends BaseTableModel> {
   /// - [columnName]: The column to filter by. Defaults to `'id'`.
   ///
   /// Returns the matching model object or `null` if no match is found.
-  Future<T?> get(value, {String columnName = 'id'}) async {
+  Future<T?> get(dynamic value, {String columnName = 'id'}) async {
     final db = await getDatabase();
     final data = await db.query(
       tableName,
